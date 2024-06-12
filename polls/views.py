@@ -4,13 +4,13 @@ from .models import Question
 
 def index(request):
     lastest_quetsion_list = Question.objects.order_by("-pub_date")[:5]
-    output = ', '.join([q.question_text for q in lastest_quetsion_list])
+
     return JsonResponse({
         "test": "test"
     })
 
 def detail(request, question_id):
-    return HttpResponse("You're looking at question %s." % question_id)
+    return JsonResponse({"test": "You're looking at question %s." % question_id})
 
 def results(request, question_id):
     response = "You're looking at the results of question %s"

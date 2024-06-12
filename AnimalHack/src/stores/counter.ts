@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useQuestionStore = defineStore('questions', {
   state() {
     return {
-      questions: ['test'],
+      questions: ['initialState'],
     }
   },
 
@@ -16,10 +16,10 @@ export const useQuestionStore = defineStore('questions', {
   actions: {
     async fetchQuestions() {
       try{
-        console.log('data')
         const response = await fetch('http://localhost:8000/polls/1/')
         const data = await response.json()
-        this.questions.push(data)
+        this.questions = data.test
+        console.log(this.questions)
       }
       catch(e) {
         console.error(e)

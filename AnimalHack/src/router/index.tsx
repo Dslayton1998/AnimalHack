@@ -1,21 +1,25 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import { useQuestionStore } from '@/stores/counter'
-import { computed, onMounted } from 'vue'
+import { computed } from 'vue'
 
 
 function test() {
   const questionStore = useQuestionStore()
-  const msg = 'test'
-  const getQuestions = computed(() => questionStore.getQuestions)
-  const questions = computed(() => questionStore.questions)
-
-  console.log(getQuestions, 'breaker', questions)
-
   questionStore.fetchQuestions()
 
+  const getQuestions = computed(() => {
+    return questionStore.getQuestions
+  })
+
+  const questions = computed(() => {
+    return questionStore.questions
+  })
+
+  // const questions = questionStore.questions
+  
   return (
-    <p>{getQuestions}</p>
+    <p>{questions.value}</p>
   )
 }
 
