@@ -9,6 +9,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "strict": true,
+    "noImplicitAny": false,
+    "lib": ["es6", "dom"],
+    "jsx": "react",
+    "types": ["react", "react-native"]
   }
 }
