@@ -1,5 +1,23 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
+import { useQuestionStore } from '@/stores/counter'
+import { computed, onMounted } from 'vue'
+
+
+function test() {
+  const questionStore = useQuestionStore()
+  const msg = 'test'
+  const getQuestions = computed(() => questionStore.getQuestions)
+  const questions = computed(() => questionStore.questions)
+
+  console.log(getQuestions, 'breaker', questions)
+
+  questionStore.fetchQuestions()
+
+  return (
+    <p>{getQuestions}</p>
+  )
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -7,7 +25,7 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: <p>test</p>
+      component: test
     },
     {
       path: '/about',
