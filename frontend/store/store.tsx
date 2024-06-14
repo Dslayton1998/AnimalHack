@@ -1,21 +1,20 @@
 import { create } from 'zustand';
 
+interface Bear {
+    test: string
+}
+
 type Store = {
-    bears: number,
-    inc: () => void
+    bears: Bear,
+    fetch: () => void
 }
 
-const useStore = create<Store>()(set => ({
-    bears: 0,
-    inc: () => set((state) => ({bears: state.bears + 1}))
+
+export const useStore = create<Store>()(set => ({
+    bears: {test: "test"},
+    
+    fetch: async () => {
+        const res = await fetch("http://localhost:8000/polls/1")
+        set({ bears: await res.json()})
+    }
 }))
-
-function Counter() {
-    const { bears, inc } = useStore()
-    return (
-        <div>
-            <span>{bears}</span>
-            <button onClick={inc}>one up</button>
-        </div>
-    )
-}
