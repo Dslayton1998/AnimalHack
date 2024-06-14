@@ -10,3 +10,17 @@
 
 To run the server - optional portnumber
 ```python manage.py runserver portnumber```
+
+
+
+
+
+making models
+``` python manage.py startapp <name>```
+
+update urls in backend/settings.py
+
+to migrate
+add app to INSTTALED_APPS backend/settings.py
+run 
+```python manage.py makemigrations <name>```
