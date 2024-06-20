@@ -21,6 +21,6 @@ making models
 update urls in backend/settings.py
 
 to migrate
-add app to INSTTALED_APPS backend/settings.py
+add app to INSTALLED_APPS backend/settings.py
 run 
 ```python manage.py makemigrations <name>```
