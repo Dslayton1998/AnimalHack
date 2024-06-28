@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from .forms import RegistrationForm
 from django.contrib import messages
 from django.http import JsonResponse
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 
 
 
@@ -59,3 +59,7 @@ def user_login(request):
         return JsonResponse({'success': 'Login Successful'})
     else:
         return JsonResponse({'error': 'Login Failed'})
+
+def user_logout(request):
+    logout(request)
+    return JsonResponse({'success': 'Logout Successful'})
