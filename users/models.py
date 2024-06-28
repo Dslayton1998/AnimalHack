@@ -1,4 +1,5 @@
 from django.contrib.auth.models import AbstractUser, BaseUserManager
+from django.contrib.auth import get_user_model
 from django.db import models
 
 class CustomUserManager(BaseUserManager):
@@ -31,6 +32,7 @@ class User(AbstractUser):
     user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, default='user')
     first_name=models.CharField(max_length=200)
     last_name=models.CharField(max_length=200)
+    # email=models.EmailField(blank=True, max_length=254, verbose_name='email address')
     phone=models.CharField(max_length=200)
     city=models.CharField(max_length=200)
     state=models.CharField(max_length=200)
