@@ -9,6 +9,8 @@ from django.core.mail import EmailMessage
 from django.http import JsonResponse
 from .forms import RegistrationForm
 from django.contrib import messages
+import json
+
 
 User = get_user_model()
 
@@ -129,16 +131,21 @@ def verify_email_complete(request):
 
 
 # Users CRUD:
-def user_get(request, id):
-    user = user.object.get(id = id)
-    return JsonResponse(user)
+def user_get(request):
+    data = json.loads(request.body)
+    user = User.objects.get(email = data['email'])
+    return JsonResponse(user.to_dict())
 
-def user_delete(request, email):
-    user = user.objects.get(email = email)
-    try:
-        user.delete()
-    except:
-        return JsonResponse("Could not delete user.")
+def user_delete(request):
+    if request.method == "POST":
+        email = request.POST.get('email')
+        user = User.objects.get(email=email)
+        try:
+            user.delete()
+            return JsonResponse({"err": "User deleted."})
+        except:
+            return JsonResponse({"err": "Could not delete user."})
+    return JsonResponse({"err": "Invalid Request"})
 
 
 def user_update(request):
