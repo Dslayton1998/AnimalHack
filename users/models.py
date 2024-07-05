@@ -25,17 +25,33 @@ class CustomUserManager(BaseUserManager):
 
 
 class User(AbstractUser):
-    USER_TYPE_CHOICES = (
-        ('admin', 'Admin'),
-        ('user', 'User'),
-    )
-    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, default='user')
+    # USER_TYPE_CHOICES = (
+    #     ('admin', 'Admin'),
+    #     ('user', 'User'),
+    # )
+    # user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, default='user')
+    username = None
     first_name=models.CharField(max_length=200)
     last_name=models.CharField(max_length=200)
-    # email=models.EmailField(blank=True, max_length=254, verbose_name='email address')
+    email=models.EmailField(blank=True, max_length=254, verbose_name='email address', unique=True)
+    email_is_verified = models.BooleanField(default=False)
     phone=models.CharField(max_length=200)
     city=models.CharField(max_length=200)
     state=models.CharField(max_length=200)
     isPrivateEmail=models.BooleanField(default=False)
     isPrivatePhone=models.BooleanField(default=False)
     created_at=models.DateTimeField(auto_now_add=True)
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = []
+
+    objects = CustomUserManager()
+
+    list_display=('email', 'first_name', 'last_name', 'phone', 'city', 'state', 'isPrivateEmail', 'isPrivatePhone', 'email_is_verified', 'ordering')
+    ordering = ('email')
+
+    def __str__(self):
+        return self.email
+    
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)

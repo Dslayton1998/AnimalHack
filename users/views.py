@@ -1,8 +1,16 @@
+from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.contrib.sites.shortcuts import get_current_site
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from .forms import RegistrationForm
 from django.contrib import messages
-from django.http import JsonResponse
-from django.contrib.auth import authenticate, login, logout
+from django.template.loader import render_to_string
+from django.utils.http import urlsafe_base64_encode
+from django.utils.encoding import force_bytes
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
+
+User = get_user_model()
 
 
 
@@ -37,7 +45,6 @@ def registration(request):
                 user.save()
 
                 messages.success(request, f'Your Account has been created {first_name}!')
-                # return redirect('login')
                 return JsonResponse(form.cleaned_data)
                     # ^ Could be a problem point 
         else:
@@ -63,3 +70,24 @@ def user_login(request):
 def user_logout(request):
     logout(request)
     return JsonResponse({'success': 'Logout Successful'})
+
+def verify_email(request):
+    if request.method == "POST":
+        if request.user.email_is_verified == False:
+            current_site = get_current_site(request)
+            user = request.user
+            email = request.user.email
+            subject = 'Verify Your Email'
+            message = render_to_string('users/verify_email.html', {
+                'request': request,
+                'user': user,
+                'domain': current_site.domain,
+                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+                'token': account_activation_token.make_token(user),
+            })
+            email = EmailMessage(subject,message, to=[email])
+            email.content_subtype = 'html'
+            email.send()
+            return JsonResponse({'success': 'Email Sent'})
+        else:
+            return JsonResponse({'error': 'Email Already Verified'})

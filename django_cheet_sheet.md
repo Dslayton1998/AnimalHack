@@ -24,3 +24,6 @@ to migrate
 add app to INSTALLED_APPS backend/settings.py
 run 
 ```python manage.py makemigrations <name>```
+
+When creating a custom user model - if setting a different field to the default username i.e. email
+user admin will cause errors due to looking for the default Username field. remove userAdmin from admin.site.register or research how to manually edit the admin user class to set ordering to your custom field.

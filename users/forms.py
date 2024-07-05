@@ -14,6 +14,7 @@ class RegistrationForm(UserCreationForm):
     state = forms.CharField(max_length=200, help_text='Required')
     isPrivateEmail = forms.BooleanField(required=False)
     isPrivatePhone = forms.BooleanField(required=False)
+    is_email_verified = forms.BooleanField(required=False)
     password1 = forms.CharField(
         label='Password',
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'id': "password"}),
@@ -26,4 +27,5 @@ class RegistrationForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ('first_name', 'last_name', 'phone', 'city', 'state', 'isPrivateEmail', 'isPrivatePhone', 'email')
+        ordering = ('email')
+        fields = ('first_name', 'last_name', 'phone', 'city', 'state', 'isPrivateEmail', 'isPrivatePhone', 'email', 'email_is_verified')
