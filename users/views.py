@@ -14,7 +14,7 @@ User = get_user_model()
 
 
 
-# Create your views here.
+# User Registration:
 def index(request):
     pass
 
@@ -79,6 +79,8 @@ def user_logout(request):
     logout(request)
     return JsonResponse({'success': 'Logout Successful'})
 
+
+# Email Verification Views:
 def verify_email(request):
     if request.method == "POST":
         if request.user.email_is_verified != True:
@@ -124,3 +126,20 @@ def verify_email_confirm(request, uidb64, token):
 
 def verify_email_complete(request):
     return render(request, 'user/verify_email_complete.html')
+
+
+# Users CRUD:
+def user_get(request, id):
+    user = user.object.get(id = id)
+    return JsonResponse(user)
+
+def user_delete(request, email):
+    user = user.objects.get(email = email)
+    try:
+        user.delete()
+    except:
+        return JsonResponse("Could not delete user.")
+
+
+def user_update(request):
+    pass
