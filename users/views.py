@@ -1,14 +1,14 @@
 from django.contrib.auth import authenticate, login, logout, get_user_model
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
 from django.contrib.sites.shortcuts import get_current_site
+from django.utils.encoding import force_bytes, force_str
+from django.template.loader import render_to_string
 from django.shortcuts import render, redirect
+from .tokens import account_activation_token
+from django.core.mail import EmailMessage
 from django.http import JsonResponse
 from .forms import RegistrationForm
 from django.contrib import messages
-from django.template.loader import render_to_string
-from django.utils.http import urlsafe_base64_encode
-from django.utils.encoding import force_bytes
-from .tokens import account_activation_token
-from django.core.mail import EmailMessage
 
 User = get_user_model()
 
@@ -20,13 +20,13 @@ def index(request):
 
 def registration(request):
     if request.method == 'POST':
-        print(request.POST, '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~')
         # Create a form that has request.POST
         form = RegistrationForm(request.POST)
 
         if form.is_valid():
             # CSRF may require additional code
             user = form.save(commit=False)
+            next = request.POST.get('next')
 
             # Set the user's password securely
             email = form.cleaned_data['email']
@@ -44,8 +44,16 @@ def registration(request):
                 user.set_password(password1)
                 user.save()
 
-                messages.success(request, f'Your Account has been created {first_name}!')
-                return JsonResponse(form.cleaned_data)
+                new_user = authenticate(email=email, password=password1)
+                login(request, new_user)
+
+                # messages.success(request, f'Your Account has been created {first_name}!') 
+                if (next):
+                    return redirect(next)
+                else:
+                    return redirect('verify-email')
+
+                # return JsonResponse(form.cleaned_data)
                     # ^ Could be a problem point 
         else:
             # Handle password mismatch error
@@ -73,12 +81,12 @@ def user_logout(request):
 
 def verify_email(request):
     if request.method == "POST":
-        if request.user.email_is_verified == False:
+        if request.user.email_is_verified != True:
             current_site = get_current_site(request)
             user = request.user
             email = request.user.email
             subject = 'Verify Your Email'
-            message = render_to_string('users/verify_email.html', {
+            message = render_to_string('user/verify_email.html', {
                 'request': request,
                 'user': user,
                 'domain': current_site.domain,
@@ -91,9 +99,11 @@ def verify_email(request):
             return JsonResponse({'success': 'Email Sent'})
         else:
             return JsonResponse({'error': 'Email Already Verified'})
+    return render(request, 'user/verify_email.html')
+    # return JsonResponse({'error': 'Invalid Request'})
         
 def verify_email_done(request):
-    return render(request, 'users/verify_email_done.html')
+    return render(request, 'user/verify_email_done.html')
 
 def verify_email_confirm(request, uidb64, token):
     try:
