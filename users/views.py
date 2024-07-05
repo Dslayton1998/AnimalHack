@@ -111,3 +111,6 @@ def verify_email_confirm(request, uidb64, token):
         messages.warning(request, 'The link is invalid.')
     return render(request, 'user/verify_email_confirm.html')
     # ^ Could use some change yet tbd
+
+def verify_email_complete(request):
+    return render(request, 'user/verify_email_complete.html')
