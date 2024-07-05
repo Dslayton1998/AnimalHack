@@ -91,3 +91,23 @@ def verify_email(request):
             return JsonResponse({'success': 'Email Sent'})
         else:
             return JsonResponse({'error': 'Email Already Verified'})
+        
+def verify_email_done(request):
+    return render(request, 'users/verify_email_done.html')
+
+def verify_email_confirm(request, uidb64, token):
+    try:
+        uid = force_str(urlsafe_base64_decode(uidb64))
+        user = User.objects.get(pk=uid)
+    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+        user = None
+    if user is not None and account_activation_token.check_token(user, token):
+        user.email_is_verified = True
+        user.save()
+        messages.success(request, 'Your email has been verified!')
+        # return redirect('verify-email-complete')
+        return JsonResponse({'success': 'Verification successful'})
+    else:
+        messages.warning(request, 'The link is invalid.')
+    return render(request, 'user/verify_email_confirm.html')
+    # ^ Could use some change yet tbd
