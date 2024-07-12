@@ -11,6 +11,7 @@ export default function HomeScreen() {
 
   useEffect(() => {fetch()}, []);
 
+
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}

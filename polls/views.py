@@ -9,7 +9,8 @@ def index(request):
         "test": "test"
     })
 
-def detail(request, question_id):
+def detail(request, question_id):        
+
     return JsonResponse({"test": "You're looking at question %s." % question_id})
 
 def results(request, question_id):
