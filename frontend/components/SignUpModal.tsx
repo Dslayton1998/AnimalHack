@@ -41,26 +41,26 @@ export default function SignUpModal({title}: SignUpProps) {
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <ThemedText type="title">Sign Up</ThemedText>
-                    <TextInput style={styles.input} placeholder="First Name" />
-                    <TextInput style={styles.input} placeholder="Last Name" />
-                    <TextInput style={styles.input} placeholder="Email" />
+                    <TextInput style={styles.input} value={firstName} onChangeText={setFirstName} placeholder="First name" />
+                    <TextInput style={styles.input} value={lastName} onChangeText={setLastName} placeholder="Last Name" />
+                    <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Email" />
                     <Switch 
                         value={isEmailPrivate} 
                         onValueChange={toggleEmailPrivacy} 
                         trackColor={{false: "#767577", true: "#81b0ff"}}
                         thumbColor={isEmailPrivate ? "#f5dd4b" : "#f4f3f4"}
                     />
-                    <TextInput style={styles.input} placeholder="Phone Number" />
+                    <TextInput style={styles.input} keyboardType="numeric" value={phoneNumber} onChangeText={setPhoneNumber} placeholder="Phone Number" />
                     <Switch 
                         value={isPhoneNumberPrivate} 
                         onValueChange={togglePhoneNumberPrivacy}
                         trackColor={{false: "#767577", true: "#81b0ff"}}
                         thumbColor={isPhoneNumberPrivate ? "#f5dd4b" : "#f4f3f4"}
                     />
-                    <TextInput style={styles.input} placeholder="City" />
-                    <TextInput style={styles.input} placeholder="State" />
-                    <TextInput style={styles.input} placeholder="Password" />
-                    <TextInput style={styles.input} placeholder="Confirm Password" />
+                    <TextInput style={styles.input} value={city} onChangeText={setCity} placeholder="City" />
+                    <TextInput style={styles.input} value={state} onChangeText={setState} placeholder="State" />
+                    <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder="Password" />
+                    <TextInput style={styles.input} value={confirmPassword} onChangeText={setConfirmPassword} placeholder="Confirm Password" />
                     <Button title="Sign Up" onPress={() => {}} />
                 </View>
             </View>
