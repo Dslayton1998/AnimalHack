@@ -11,7 +11,7 @@ type Store = {
 
 
 export const useStore = create<Store>()(set => ({
-    bears: {test: "test"},
+    bears: {test: "Settings"},
     
     fetch: async () => {
         const res = await fetch("http://localhost:8000/polls/1")

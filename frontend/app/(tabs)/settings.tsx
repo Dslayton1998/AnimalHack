@@ -1,17 +1,18 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import { Button, Image, StyleSheet } from 'react-native';
 
-import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
 import { useStore } from '@/store/store';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import SignUpModal from '@/components/SignUpModal';
 export default function HomeScreen() {
   const {bears, fetch} = useStore();
+  const [signUpModalVisible, setSignUpModalVisible] = useState(false);
 
   useEffect(() => {fetch()}, []);
 
-
+  console.log(bears)
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -24,6 +25,11 @@ export default function HomeScreen() {
       <ThemedView style={styles.titleContainer}>
         <ThemedText type="title">{bears.test}</ThemedText>
       </ThemedView>
+      {/* <Button title="Login" onPress={fetch} /> */}
+      <Button title="Sign Up" onPress={() => {
+        setSignUpModalVisible(true);
+      }} />
+      {signUpModalVisible && <SignUpModal title="im a test"/>}
     </ParallaxScrollView>
   );
 }
