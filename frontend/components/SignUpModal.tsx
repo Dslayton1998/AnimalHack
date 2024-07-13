@@ -1,9 +1,23 @@
 import { Modal, View, StyleSheet, TextInput, Switch, Button } from "react-native"
 import { ThemedText } from "./ThemedText"
 import { useState } from "react"
+import { useStore } from "../store/store"
 
 type SignUpProps = {
     title?: string // question mark means optional
+}
+
+interface FormData {
+    first_name: string,
+    last_name: string,
+    email: string,
+    phone_number: string,
+    city: string,
+    state: string,
+    password: string,
+    is_email_private: boolean,
+    is_phone_number_private: boolean
+
 }
 
 // const SignUpModal: React.FC<SignUpProps> = ({title}) => {
@@ -12,24 +26,38 @@ type SignUpProps = {
 
 // export default SignUpModal
 
+/// title props is there as an example for typescript reference
 export default function SignUpModal({title}: SignUpProps) {
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [email, setEmail] = useState("");
-    const [phoneNumber, setPhoneNumber] = useState("");
-    const [city, setCity] = useState("");
-    const [state, setState] = useState("");
-    const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState("");
+    const { signUp, fetch } = useStore();
+    const [firstName, setFirstName] = useState<string>("");
+    const [lastName, setLastName] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
+    const [phoneNumber, setPhoneNumber] = useState<string>("");
+    const [city, setCity] = useState<string>("");
+    const [state, setState] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [confirmPassword, setConfirmPassword] = useState<string>("");
 
-    const [isEmailPrivate, setIsEmailPrivate] = useState(true);
-    const [isPhoneNumberPrivate, setIsPhoneNumberPrivate] = useState(true);
+    const [isEmailPrivate, setIsEmailPrivate] = useState<boolean>(true);
+    const [isPhoneNumberPrivate, setIsPhoneNumberPrivate] = useState<boolean>(true);
 
     const toggleEmailPrivacy = () => setIsEmailPrivate(!isEmailPrivate);
     const togglePhoneNumberPrivacy = () => setIsPhoneNumberPrivate(!isPhoneNumberPrivate);
 
-    function signup(): void {
+    function onSignup(): void {
+        const formData : FormData = {
+            first_name: firstName,
+            last_name: lastName,
+            email: email,
+            phone_number: phoneNumber,
+            city: city,
+            state: state,
+            password: password,
+            is_email_private: isEmailPrivate,
+            is_phone_number_private: isPhoneNumberPrivate
+        }
 
+        signUp(formData);
     }
 
     return (
@@ -61,7 +89,7 @@ export default function SignUpModal({title}: SignUpProps) {
                     <TextInput style={styles.input} value={state} onChangeText={setState} placeholder="State" />
                     <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder="Password" />
                     <TextInput style={styles.input} value={confirmPassword} onChangeText={setConfirmPassword} placeholder="Confirm Password" />
-                    <Button title="Sign Up" onPress={() => {}} />
+                    <Button title="Sign Up" onPress={onSignup} />
                 </View>
             </View>
         </Modal>

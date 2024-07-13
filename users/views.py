@@ -21,6 +21,8 @@ def index(request):
     pass
 
 def registration(request):
+    data  = json.loads(request.body)
+    print("!!!!!!!!!!!!!!!!!!!!", data)
     if request.method == 'POST':
         # Create a form that has request.POST
         form = RegistrationForm(request.POST)
