@@ -7,16 +7,17 @@ type SignUpProps = {
     title?: string // question mark means optional
 }
 
-interface FormData {
+interface SignUpFormData {
     first_name: string,
     last_name: string,
     email: string,
-    phone_number: string,
+    phone: string,
     city: string,
     state: string,
-    password: string,
-    is_email_private: boolean,
-    is_phone_number_private: boolean
+    password1: string,
+    password2: string,
+    isPrivateEmail: boolean,
+    isPrivatePhone: boolean
 
 }
 
@@ -45,19 +46,23 @@ export default function SignUpModal({title}: SignUpProps) {
     const togglePhoneNumberPrivacy = () => setIsPhoneNumberPrivate(!isPhoneNumberPrivate);
 
     function onSignup(): void {
-        const formData : FormData = {
+        const formDataInfo : SignUpFormData = {
             first_name: firstName,
             last_name: lastName,
             email: email,
-            phone_number: phoneNumber,
+            phone: phoneNumber,
             city: city,
             state: state,
-            password: password,
-            is_email_private: isEmailPrivate,
-            is_phone_number_private: isPhoneNumberPrivate
+            password1: password,
+            password2: confirmPassword,
+            isPrivateEmail: isEmailPrivate,
+            isPrivatePhone: isPhoneNumberPrivate
         }
 
-        signUp(formData);
+    // const formData = new FormData();
+    // formData.append('file', JSON.stringify(formDataInfo));
+   
+    signUp(formDataInfo);
     }
 
     return (

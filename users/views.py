@@ -25,7 +25,9 @@ def registration(request):
     print("!!!!!!!!!!!!!!!!!!!!", data)
     if request.method == 'POST':
         # Create a form that has request.POST
-        form = RegistrationForm(request.POST)
+        # form = RegistrationForm(request.POST)
+        form = RegistrationForm(data)
+        print('////////////////////////;', form.errors)
 
         if form.is_valid():
             # CSRF may require additional code

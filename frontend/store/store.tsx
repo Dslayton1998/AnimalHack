@@ -25,7 +25,7 @@ export const useStore = create<Store>()(set => ({
         let res = await fetch(`${API_URL}/users/registration/`, 
     {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
+        headers: {"multipart": "form-data"},
         body: JSON.stringify(props)
     })
 
