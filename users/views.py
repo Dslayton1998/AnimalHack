@@ -50,8 +50,8 @@ def registration(request):
                 user.set_password(password1)
                 user.save()
 
-                new_user = authenticate(email=email, password=password1)
-                login(request, new_user)
+                authenticate(email=email, password=password1)
+                login(request, user)
 
                 # messages.success(request, f'Your Account has been created {first_name}!') 
                 if (next):
@@ -88,7 +88,7 @@ def user_logout(request):
 
 # Email Verification Views:
 def verify_email(request):
-    if request.method == "POST":
+    if request.method == "GET":
         if request.user.email_is_verified != True:
             current_site = get_current_site(request)
             user = request.user
@@ -104,8 +104,10 @@ def verify_email(request):
             email = EmailMessage(subject,message, to=[email])
             email.content_subtype = 'html'
             email.send()
+            print('email sent')
             return JsonResponse({'success': 'Email Sent'})
         else:
+            print('email not sent')
             return JsonResponse({'error': 'Email Already Verified'})
     return render(request, 'user/verify_email.html')
     # return JsonResponse({'error': 'Invalid Request'})

@@ -29,7 +29,7 @@ interface SignUpFormData {
 
 /// title props is there as an example for typescript reference
 export default function SignUpModal({title}: SignUpProps) {
-    const { signUp, fetch } = useStore();
+    const { signUp } = useStore();
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
     const [email, setEmail] = useState<string>("");
@@ -58,9 +58,6 @@ export default function SignUpModal({title}: SignUpProps) {
             isPrivateEmail: isEmailPrivate,
             isPrivatePhone: isPhoneNumberPrivate
         }
-
-    // const formData = new FormData();
-    // formData.append('file', JSON.stringify(formDataInfo));
    
     signUp(formDataInfo);
     }
