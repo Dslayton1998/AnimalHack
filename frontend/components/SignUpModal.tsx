@@ -2,6 +2,7 @@ import { Modal, View, StyleSheet, TextInput, Switch, Button } from "react-native
 import { ThemedText } from "./ThemedText"
 import { useState } from "react"
 import { useStore } from "../store/store"
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
 type SignUpProps = {
     title?: string // question mark means optional
@@ -68,6 +69,7 @@ export default function SignUpModal({title}: SignUpProps) {
             transparent={true}
             visible={true}
         >
+            <KeyboardAwareScrollView enableAutomaticScroll>
             <View style={styles.centeredView}>
                 <View style={styles.modalView}>
                     <ThemedText type="title">Sign Up</ThemedText>
@@ -94,6 +96,7 @@ export default function SignUpModal({title}: SignUpProps) {
                     <Button title="Sign Up" onPress={onSignup} />
                 </View>
             </View>
+            </KeyboardAwareScrollView>
         </Modal>
     )
 }
