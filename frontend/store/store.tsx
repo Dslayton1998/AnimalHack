@@ -1,5 +1,4 @@
 import { create } from 'zustand';
-import { API_URL } from "@env"
 
 interface Bear {
     test: string
@@ -21,16 +20,13 @@ export const useStore = create<Store>()(set => ({
     },
 
     signUp: async (props: object) => {
-        console.log('hit', props)
-        let res = await fetch(`${API_URL}/users/registration/`, 
-    {
+        let res = await fetch(`${process.env.API_URL}/users/registration/`, {
         method: "POST",
         headers: {"multipart": "form-data"},
         body: JSON.stringify(props)
     })
 
     const data = await res.json()
-    console.log('test', res,  data)
     return data
 }
 }))

@@ -36,13 +36,6 @@ def registration(request):
 
             # Set the user's password securely
             email = form.cleaned_data['email']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            phone = form.cleaned_data['phone']
-            city = form.cleaned_data['city']
-            state = form.cleaned_data['state']
-            isPrivateEmail = form.cleaned_data['isPrivateEmail']
-            isPrivatePhone = form.cleaned_data['isPrivatePhone']
             password1 = form.cleaned_data['password1']
             password2 = form.cleaned_data['password2']
 

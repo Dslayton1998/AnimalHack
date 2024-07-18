@@ -60,7 +60,7 @@ export default function SignUpModal({title}: SignUpProps) {
             isPrivatePhone: isPhoneNumberPrivate
         }
    
-    signUp(formDataInfo);
+        signUp(formDataInfo);
     }
 
     return (
