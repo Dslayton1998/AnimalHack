@@ -21,9 +21,13 @@ def index(request):
     pass
 
 def registration(request):
+    data  = json.loads(request.body)
+    print("!!!!!!!!!!!!!!!!!!!!", data)
     if request.method == 'POST':
         # Create a form that has request.POST
-        form = RegistrationForm(request.POST)
+        # form = RegistrationForm(request.POST)
+        form = RegistrationForm(data)
+        print('////////////////////////;', form.errors)
 
         if form.is_valid():
             # CSRF may require additional code
@@ -32,13 +36,6 @@ def registration(request):
 
             # Set the user's password securely
             email = form.cleaned_data['email']
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            phone = form.cleaned_data['phone']
-            city = form.cleaned_data['city']
-            state = form.cleaned_data['state']
-            isPrivateEmail = form.cleaned_data['isPrivateEmail']
-            isPrivatePhone = form.cleaned_data['isPrivatePhone']
             password1 = form.cleaned_data['password1']
             password2 = form.cleaned_data['password2']
 
@@ -46,8 +43,8 @@ def registration(request):
                 user.set_password(password1)
                 user.save()
 
-                new_user = authenticate(email=email, password=password1)
-                login(request, new_user)
+                authenticate(email=email, password=password1)
+                login(request, user)
 
                 # messages.success(request, f'Your Account has been created {first_name}!') 
                 if (next):
@@ -84,7 +81,7 @@ def user_logout(request):
 
 # Email Verification Views:
 def verify_email(request):
-    if request.method == "POST":
+    if request.method == "GET":
         if request.user.email_is_verified != True:
             current_site = get_current_site(request)
             user = request.user
@@ -100,8 +97,10 @@ def verify_email(request):
             email = EmailMessage(subject,message, to=[email])
             email.content_subtype = 'html'
             email.send()
+            print('email sent')
             return JsonResponse({'success': 'Email Sent'})
         else:
+            print('email not sent')
             return JsonResponse({'error': 'Email Already Verified'})
     return render(request, 'user/verify_email.html')
     # return JsonResponse({'error': 'Invalid Request'})

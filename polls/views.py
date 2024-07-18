@@ -11,7 +11,7 @@ def index(request):
 
 def detail(request, question_id):        
 
-    return JsonResponse({"test": "You're looking at question %s." % question_id})
+    return JsonResponse({"test": "HIT %s." % question_id})
 
 def results(request, question_id):
     response = "You're looking at the results of question %s"

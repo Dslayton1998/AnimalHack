@@ -33,11 +33,11 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="test"
+        name="settings"
         options={{
-          title: 'TAB',
+          title: 'Settings',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'home'} color={color} />
+            <TabBarIcon name={focused ? 'reorder-three' : 'reorder-three-outline'} color={color} />
           ),
         }}
       />

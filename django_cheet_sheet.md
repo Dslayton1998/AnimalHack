@@ -11,6 +11,9 @@
 To run the server - optional portnumber
 ```python manage.py runserver portnumber```
 
+```pip freeze > requirements.txt``` generates the requirements.txt file
+``` pip install -r requirements.txt``` installs the requirements
+
 
 
 
