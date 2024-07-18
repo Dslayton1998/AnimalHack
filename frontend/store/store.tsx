@@ -32,12 +32,13 @@ export const useStore = create<Store>()(set => ({
     },
 
     login: async (props: object) => {
-        let res = await fetch(`${process.env.API_URL}/users/user_login/`, {
-            method: "GET",
+        let res = await fetch(`${process.env.API_URL}/users/login/`, {
+            method: "POST",
             headers: {"multipart": "form-data"},
             body: JSON.stringify(props)
         })
         // ^ Might need a refactor!
+// todo: Testing
         const data = await res.json()
         return data
     },
