@@ -27,9 +27,11 @@ export default function HomeScreen() {
       </ThemedView>
       {/* <Button title="Login" onPress={fetch} /> */}
       <Button title="Sign Up" onPress={() => {
-        setSignUpModalVisible(true);
+        setSignUpModalVisible(!signUpModalVisible);
       }} />
-      {signUpModalVisible && <SignUpModal title="im a test"/>}
+
+      {signUpModalVisible ? <SignUpModal modal={true} setModal={setSignUpModalVisible}/> : <SignUpModal modal={false} setModal={setSignUpModalVisible}/>}
+      
     </ParallaxScrollView>
   );
 }
