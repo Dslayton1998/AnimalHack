@@ -22,12 +22,10 @@ def index(request):
 
 def registration(request):
     data  = json.loads(request.body)
-    print("!!!!!!!!!!!!!!!!!!!!", data)
     if request.method == 'POST':
         # Create a form that has request.POST
         # form = RegistrationForm(request.POST)
         form = RegistrationForm(data)
-        print('////////////////////////;', form.errors)
 
         if form.is_valid():
             # CSRF may require additional code
@@ -64,8 +62,11 @@ def registration(request):
                             # ^ Eventually return Json
 
 def user_login(request):
-    email = request.POST["email"]
-    password = request.POST["password"]
+    data = json.loads(request.body)
+
+    email = data["email"]
+    password = data["password"]
+
     user = authenticate(request, email=email, password=password)
 
     if user is not None:
@@ -82,6 +83,7 @@ def user_logout(request):
 # Email Verification Views:
 def verify_email(request):
     if request.method == "GET":
+        print(request.user)
         if request.user.email_is_verified != True:
             current_site = get_current_site(request)
             user = request.user
