@@ -71,8 +71,7 @@ export default function SignUpModal({modal, setModal}: SignUpProps) {
             transparent={true}
             visible={modal}
         >
-            <KeyboardAwareScrollView enableAutomaticScroll>
-            <View style={styles.centeredView}>
+            <KeyboardAwareScrollView contentContainerStyle={styles.centeredView} enableAutomaticScroll>
                 <View style={styles.modalView}>
                     <ThemedText type="title">Sign Up</ThemedText>
                     <TextInput style={styles.input} value={firstName} onChangeText={setFirstName} placeholder="First name" />
@@ -98,7 +97,6 @@ export default function SignUpModal({modal, setModal}: SignUpProps) {
                     <Button title="Sign Up" onPress={onSignup} />
                     <Button title="Close" onPress={() => setModal(false)} />
                 </View>
-            </View>
             </KeyboardAwareScrollView>
         </Modal>
     )

@@ -6,13 +6,15 @@ import { ThemedView } from '@/components/ThemedView';
 import { useStore } from '@/store/store';
 import { useEffect, useState } from 'react';
 import SignUpModal from '@/components/SignUpModal';
+import LoginModal from '@/components/LoginModal';
 export default function HomeScreen() {
   const {bears, fetch} = useStore();
-  const [signUpModalVisible, setSignUpModalVisible] = useState(false);
+
+  const [signUpModalVisible, setSignUpModalVisible] = useState<boolean>(false);
+  const [loginModalVisible, setLoginModalVisible] = useState<boolean>(false);
 
   useEffect(() => {fetch()}, []);
 
-  console.log(bears)
   return (
     <ParallaxScrollView
       headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
@@ -29,8 +31,13 @@ export default function HomeScreen() {
       <Button title="Sign Up" onPress={() => {
         setSignUpModalVisible(!signUpModalVisible);
       }} />
+      <Button title="Login" onPress={() => {
+        setLoginModalVisible(!loginModalVisible);
+      }} />
 
       {signUpModalVisible ? <SignUpModal modal={true} setModal={setSignUpModalVisible}/> : <SignUpModal modal={false} setModal={setSignUpModalVisible}/>}
+      {loginModalVisible ? <LoginModal modal={true} setModal={setLoginModalVisible}/> : <LoginModal modal={false} setModal={setLoginModalVisible}/>}
+      
       
     </ParallaxScrollView>
   );
