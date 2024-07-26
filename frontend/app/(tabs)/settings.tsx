@@ -7,11 +7,13 @@ import { useStore } from '@/store/store';
 import { useEffect, useState } from 'react';
 import SignUpModal from '@/components/SignUpModal';
 import LoginModal from '@/components/LoginModal';
+import LogoutModal from '@/components/LogoutModal';
 export default function HomeScreen() {
   const {bears, fetch} = useStore();
 
   const [signUpModalVisible, setSignUpModalVisible] = useState<boolean>(false);
   const [loginModalVisible, setLoginModalVisible] = useState<boolean>(false);
+  const [logoutModalVisible, setLogoutModalVisible] = useState<boolean>(false);
 
   useEffect(() => {fetch()}, []);
 
@@ -34,10 +36,11 @@ export default function HomeScreen() {
       <Button title="Login" onPress={() => {
         setLoginModalVisible(!loginModalVisible);
       }} />
+      <Button title="Logout" onPress={() => setLogoutModalVisible(!logoutModalVisible)} />
 
       {signUpModalVisible ? <SignUpModal modal={true} setModal={setSignUpModalVisible}/> : <SignUpModal modal={false} setModal={setSignUpModalVisible}/>}
       {loginModalVisible ? <LoginModal modal={true} setModal={setLoginModalVisible}/> : <LoginModal modal={false} setModal={setLoginModalVisible}/>}
-      
+      {logoutModalVisible ? <LogoutModal modal={true} setModal={setLogoutModalVisible}/> : <LogoutModal modal={false} setModal={setLogoutModalVisible}/>}
       
     </ParallaxScrollView>
   );

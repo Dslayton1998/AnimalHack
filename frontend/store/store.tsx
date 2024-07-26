@@ -9,6 +9,7 @@ type Store = {
     fetch: () => void,
     signUp: (props: object) => any,
     login: (props: object) => any,
+    logout: () => any
 }
 
 
@@ -42,5 +43,14 @@ export const useStore = create<Store>()(set => ({
         console.log('hit with data', data)
         return data
     },
+
+    logout: async () => {
+        let res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/logout/`, {
+            method: "POST",
+            headers: {"multipart": "form-data"},
+        })
+        
+        return await res.json()
+    }
 
 }))
