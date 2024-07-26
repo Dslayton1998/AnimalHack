@@ -45,7 +45,7 @@ export default function LoginModal({modal, setModal}: Props) {
                     <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Email" />
                     <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder="Password" />
                     <Button title="Login" onPress={onLogin} />
-                    <Button title="Close" onPress={() => {setModal(false); console.log('test', `${process.env.EXPO_PUBLIC_API_URL}/users/login/`)}} />
+                    <Button title="Close" onPress={() => setModal(false)} />
                 </View>
             </KeyboardAwareScrollView>
         </Modal>

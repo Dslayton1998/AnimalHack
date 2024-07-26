@@ -32,7 +32,6 @@ export const useStore = create<Store>()(set => ({
     },
 
     login: async (props: object) => {
-        console.log('im hit', `${process.env.EXPO_PUBLIC_API_URL}/users/login/`)
         let res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/login/`, {
             method: "POST",
             headers: {"multipart": "form-data"},
