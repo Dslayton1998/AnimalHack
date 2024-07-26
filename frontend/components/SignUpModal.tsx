@@ -5,7 +5,9 @@ import { useStore } from "../store/store"
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view"
 
 type SignUpProps = {
-    title?: string // question mark means optional
+    // title?: string, // question mark means optional
+    modal: boolean,
+    setModal: (value: boolean | ((prevVar: boolean) => boolean)) => void
 }
 
 interface SignUpFormData {
@@ -29,7 +31,7 @@ interface SignUpFormData {
 // export default SignUpModal
 
 /// title props is there as an example for typescript reference
-export default function SignUpModal({title}: SignUpProps) {
+export default function SignUpModal({modal, setModal}: SignUpProps) {
     const { signUp } = useStore();
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
@@ -67,10 +69,9 @@ export default function SignUpModal({title}: SignUpProps) {
         <Modal
             animationType="slide"
             transparent={true}
-            visible={true}
+            visible={modal}
         >
-            <KeyboardAwareScrollView enableAutomaticScroll>
-            <View style={styles.centeredView}>
+            <KeyboardAwareScrollView contentContainerStyle={styles.centeredView} enableAutomaticScroll>
                 <View style={styles.modalView}>
                     <ThemedText type="title">Sign Up</ThemedText>
                     <TextInput style={styles.input} value={firstName} onChangeText={setFirstName} placeholder="First name" />
@@ -94,8 +95,8 @@ export default function SignUpModal({title}: SignUpProps) {
                     <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder="Password" />
                     <TextInput style={styles.input} value={confirmPassword} onChangeText={setConfirmPassword} placeholder="Confirm Password" />
                     <Button title="Sign Up" onPress={onSignup} />
+                    <Button title="Close" onPress={() => setModal(false)} />
                 </View>
-            </View>
             </KeyboardAwareScrollView>
         </Modal>
     )

@@ -7,7 +7,8 @@ interface Bear {
 type Store = {
     bears: Bear,
     fetch: () => void,
-    signUp: (props: object) => any
+    signUp: (props: object) => any,
+    login: (props: object) => any,
 }
 
 
@@ -20,13 +21,26 @@ export const useStore = create<Store>()(set => ({
     },
 
     signUp: async (props: object) => {
-        let res = await fetch(`${process.env.API_URL}/users/registration/`, {
+        let res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/registration/`, {
         method: "POST",
         headers: {"multipart": "form-data"},
         body: JSON.stringify(props)
     })
 
-    const data = await res.json()
-    return data
-}
+        const data = await res.json()
+        return data
+    },
+
+    login: async (props: object) => {
+        let res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/login/`, {
+            method: "POST",
+            headers: {"multipart": "form-data"},
+            body: JSON.stringify(props)
+        })
+        // ^ Might need a refactor!
+        const data = await res.json()
+        console.log('hit with data', data)
+        return data
+    },
+
 }))
