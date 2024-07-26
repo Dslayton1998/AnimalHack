@@ -21,7 +21,7 @@ export const useStore = create<Store>()(set => ({
     },
 
     signUp: async (props: object) => {
-        let res = await fetch(`${process.env.API_URL}/users/registration/`, {
+        let res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/registration/`, {
         method: "POST",
         headers: {"multipart": "form-data"},
         body: JSON.stringify(props)
@@ -32,7 +32,7 @@ export const useStore = create<Store>()(set => ({
     },
 
     login: async (props: object) => {
-        let res = await fetch(`${process.env.API_URL}/users/login/`, {
+        let res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/login/`, {
             method: "POST",
             headers: {"multipart": "form-data"},
             body: JSON.stringify(props)
@@ -40,6 +40,7 @@ export const useStore = create<Store>()(set => ({
         // ^ Might need a refactor!
 // todo: Testing
         const data = await res.json()
+        console.log('hit with data', data)
         return data
     },
 

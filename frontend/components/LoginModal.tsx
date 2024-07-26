@@ -10,10 +10,15 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 
 interface LoginFormData {
     email: string,
-    password: string
+    password: string,
 };
 
-export default function LoginModal() {
+type Props = {
+    modal: boolean,
+    setModal: (value: boolean | ((prevValue: boolean) => boolean)) => void
+}
+
+export default function LoginModal({modal, setModal}: Props) {
     const { login } = useStore();
     const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
@@ -32,16 +37,15 @@ export default function LoginModal() {
         <Modal
             animationType="slide"
             transparent={true}
-            visible={true}
+            visible={modal}
         >
-            <KeyboardAwareScrollView enableAutomaticScroll>
-                <View style={styles.centeredView}>
-                    <View style={styles.modalView}>
-                        <ThemedText type="title">Login!</ThemedText>
-                        <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Email" />
-                        <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder="Password" />
-                        <Button title="Login" onPress={onLogin} />
-                    </View>
+            <KeyboardAwareScrollView contentContainerStyle={styles.centeredView} enableAutomaticScroll>
+                <View style={styles.modalView}>
+                    <ThemedText type="title">Login!</ThemedText>
+                    <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Email" />
+                    <TextInput style={styles.input} value={password} onChangeText={setPassword} placeholder="Password" />
+                    <Button title="Login" onPress={onLogin} />
+                    <Button title="Close" onPress={() => setModal(false)} />
                 </View>
             </KeyboardAwareScrollView>
         </Modal>
