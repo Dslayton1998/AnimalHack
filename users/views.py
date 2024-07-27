@@ -143,11 +143,10 @@ def user_delete(request):
         user = User.objects.get(email=email)
         try:
             user.delete()
-            return JsonResponse({"err": "User deleted."})
+            return JsonResponse({"message": "User deleted."})
         except:
             return JsonResponse({"err": "Could not delete user."})
     return JsonResponse({"err": "Invalid Request"})
-
 
 def user_update(request):
     pass

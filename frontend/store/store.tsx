@@ -37,10 +37,20 @@ export const useStore = create<Store>()(set => ({
             headers: {"multipart": "form-data"},
             body: JSON.stringify(props)
         })
-        // ^ Might need a refactor!
+
         const data = await res.json()
-        console.log('hit with data', data)
         return data
     },
+
+    delete: async (props: object) => {
+        let res = await fetch(`${process.env.EXPO_PUBLIC_API_URL}/users/delete/`, {
+           method: "POST",
+           headers: {"multipart": "form-data"},
+           body: JSON.stringify(props) 
+        })
+
+        const data = await res.json()
+        return data
+    }
 
 }))
